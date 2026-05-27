@@ -1,46 +1,183 @@
-# Getting Started with Create React App
+# CryptoPulse Pro
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A real-time cryptocurrency dashboard built with React and TypeScript. Track live prices, analyze market trends, manage a watchlist, and get AI-powered trading insights — all in a dark, professional interface.
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
+---
+
+## Features
+
+### Dashboard
+- **Global Market Overview** — Spot volume, futures volume, open interest, and 24h liquidation data (longs & shorts).
+- **Interactive Price Chart** — 7-day price history for any selected coin with smooth scrolling.
+- **Live Coin Table** — Top 50 cryptocurrencies by market cap, sortable with real-time price updates every 60 seconds.
+- **Watchlist Sidebar** — Add/remove coins to track. Click any coin to jump to its chart.
+
+### AI Trading Assistant
+- **One-click Analysis** — Get trend analysis and trading suggestions for any selected coin.
+- **Smart Mock Engine** — Produces varied, realistic analysis based on actual price movements (API key handled server-side).
+
+### Markets
+- Full-width view of all 50 tracked coins with live stats.
+
+### Portfolio
+- Card-based view of your watchlisted assets.
+- Total portfolio value calculation.
+- Empty state with call-to-action to browse markets.
+
+---
+
+## Tech Stack
+
+| Layer          | Technology                          |
+|----------------|-------------------------------------|
+| Framework      | React 18 + TypeScript               |
+| Styling        | CSS custom properties (dark theme)  |
+| Charts         | Recharts                            |
+| HTTP Client    | Axios                               |
+| Icons          | Lucide React                        |
+| Data Source    | CoinGecko API (free tier)           |
+
+---
+
+## Project Structure
+
+```
+crypto-dashboard/
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   ├── manifest.json
+│   └── robots.txt
+├── src/
+│   ├── components/
+│   │   ├── AIAssistant.tsx      # AI analysis panel
+│   │   ├── CoinTable.tsx        # Sortable coin table
+│   │   ├── MarketData.tsx       # Global market metrics
+│   │   ├── Navbar.tsx           # Navigation bar with tabs
+│   │   ├── PriceChart.tsx       # Recharts price history
+│   │   └── Watchlist.tsx        # User watchlist sidebar
+│   ├── hooks/
+│   │   └── useWatchlist.ts      # Watchlist localStorage hook
+│   ├── services/
+│   │   └── api.ts               # CoinGecko API + AI analysis
+│   ├── styles/
+│   │   ├── AIAssistant.css
+│   │   ├── App.css
+│   │   ├── Chart.css
+│   │   ├── MarketData.css
+│   │   ├── Navbar.css
+│   │   ├── Table.css
+│   │   └── Watchlist.css
+│   ├── types/
+│   │   └── crypto.ts            # TypeScript interfaces
+│   ├── App.tsx                  # Root component with tab routing
+│   ├── index.tsx                # Entry point
+│   └── index.css                # Global reset styles
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js** 18+ and **npm** 9+
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repo-url>
+cd crypto-dashboard
+
+# Install dependencies
+npm install
+```
+
+### Development
+
+```bash
+npm start
+```
+
+Runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser. The page will hot-reload when you make changes.
+
+### Production Build
+
+```bash
+npm run build
+```
+
+Builds the app for production to the `build/` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
+
+### Testing
+
+```bash
+npm test
+```
+
+Launches the test runner in interactive watch mode.
+
+---
 
 ## Available Scripts
 
-In the project directory, you can run:
+| Command           | Description                                      |
+|-------------------|--------------------------------------------------|
+| `npm start`       | Runs the app in development mode                 |
+| `npm run build`   | Builds the app for production                    |
+| `npm test`        | Runs the test suite                              |
+| `npm run eject`   | Ejects from Create React App (one-way operation) |
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## API Configuration
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The dashboard uses the **CoinGecko public API** (no key required) for market data and price history.
 
-### `npm test`
+The **AI analysis** feature currently uses a built-in mock engine that generates realistic trading suggestions based on live price data. In production, the backend should handle the OpenAI API key — the frontend sends no keys.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Design System
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Color Palette
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Token              | Hex       | Usage                    |
+|--------------------|-----------|--------------------------|
+| `--bg-primary`     | `#060610` | Page background          |
+| `--bg-secondary`   | `#0c0c1d` | Card backgrounds         |
+| `--bg-card`        | `#0f1023` | Panel surfaces           |
+| `--accent`         | `#00ff88` | Positive/up indicators   |
+| `--down`           | `#ff3b5c` | Negative/down indicators |
+| `--purple`         | `#a855f7` | AI/insight highlights    |
+| `--amber`          | `#ffaa00` | Warnings/disclaimers     |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Typography
 
-### `npm run eject`
+| Token             | Font Stack                                |
+|-------------------|-------------------------------------------|
+| `--font-heading`  | `'Outfit', 'Inter', sans-serif`           |
+| `--font-body`     | `'Inter', sans-serif`                     |
+| `--font-mono`     | `'JetBrains Mono', 'Consolas', monospace` |
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tab Navigation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The navbar provides three tabs:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. **Dashboard** — Full view with market overview, chart, coin table, AI assistant, and watchlist.
+2. **Markets** — Dedicated full-width table of all tracked coins with summary stats.
+3. **Portfolio** — Card grid of watchlisted coins with total value and individual metrics.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+MIT © 2026
