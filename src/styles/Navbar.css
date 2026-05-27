@@ -192,21 +192,6 @@
   background: var(--accent-dim);
 }
 
-.mobile-ai-hint {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: var(--purple-dim);
-  border-bottom: 1px solid rgba(168, 85, 247, 0.1);
-  cursor: pointer;
-  font-size: 0.75rem;
-  color: var(--purple);
-  font-family: var(--font-body);
-  font-weight: 500;
-}
-
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -226,10 +211,6 @@
   }
 
   .mobile-bottom-nav {
-    display: flex;
-  }
-
-  .mobile-ai-hint {
     display: flex;
   }
 }

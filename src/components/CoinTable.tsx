@@ -10,6 +10,13 @@ interface Props {
   onToggleWatchlist: (id: string) => void;
 }
 
+const formatMarketCap = (mc: number): string => {
+  if (mc >= 1e12) return `$${(mc / 1e12).toFixed(2)}T`;
+  if (mc >= 1e9) return `$${(mc / 1e9).toFixed(2)}B`;
+  if (mc >= 1e6) return `$${(mc / 1e6).toFixed(2)}M`;
+  return `$${mc.toLocaleString()}`;
+};
+
 const CoinTable: React.FC<Props> = ({ coins, onSelectCoin, watchlist, onToggleWatchlist }) => {
   const [sortConfig, setSortConfig] = useState<{ key: keyof Coin; direction: 'asc' | 'desc' } | null>(null);
 
@@ -33,30 +40,34 @@ const CoinTable: React.FC<Props> = ({ coins, onSelectCoin, watchlist, onToggleWa
         <table>
           <thead>
             <tr>
-              <th>Watch</th>
-              <th onClick={() => requestSort('name')}>Asset</th>
-              <th onClick={() => requestSort('current_price')}>Price</th>
-              <th onClick={() => requestSort('price_change_percentage_24h')}>24h Change</th>
-              <th onClick={() => requestSort('market_cap')}>Market Cap</th>
+              <th className="col-watch"><Star size={14} /></th>
+              <th onClick={() => requestSort('name')} className="col-asset">Asset</th>
+              <th onClick={() => requestSort('current_price')} className="col-price">Price</th>
+              <th onClick={() => requestSort('price_change_percentage_24h')} className="col-change">24h</th>
+              <th onClick={() => requestSort('market_cap')} className="col-mcap-desk">Market Cap</th>
             </tr>
           </thead>
           <tbody>
             {sortedCoins.map(coin => (
               <tr key={coin.id} onClick={() => onSelectCoin(coin.id)}>
-                <td onClick={(e) => { e.stopPropagation(); onToggleWatchlist(coin.id); }}>
-                  <Star className={watchlist.includes(coin.id) ? 'star-active' : 'star-inactive'} size={18} />
+                <td className="col-watch" onClick={(e) => { e.stopPropagation(); onToggleWatchlist(coin.id); }}>
+                  <Star className={watchlist.includes(coin.id) ? 'star-active' : 'star-inactive'} size={16} />
                 </td>
-                <td>
+                <td className="col-asset">
                   <div className="asset-cell">
                     <img src={coin.image} alt={coin.name} className="coin-icon" />
-                    <span>{coin.name}</span> <span className="symbol">{coin.symbol.toUpperCase()}</span>
+                    <div className="asset-text">
+                      <span className="asset-name">{coin.name}</span>
+                      <span className="asset-symbol">{coin.symbol?.toUpperCase()}</span>
+                      <span className="asset-mcap-mobile">{formatMarketCap(coin.market_cap || 0)}</span>
+                    </div>
                   </div>
                 </td>
-                <td>${coin.current_price?.toLocaleString() ?? 'N/A'}</td>
-                <td className={(coin.price_change_percentage_24h ?? 0) > 0 ? 'text-up' : 'text-down'}>
-                  {coin.price_change_percentage_24h ? `${coin.price_change_percentage_24h.toFixed(2)}%` : '0.00%'}
+                <td className="col-price">${coin.current_price?.toLocaleString() ?? 'N/A'}</td>
+                <td className={`col-change ${(coin.price_change_percentage_24h ?? 0) >= 0 ? 'text-up' : 'text-down'}`}>
+                  {coin.price_change_percentage_24h != null ? `${coin.price_change_percentage_24h >= 0 ? '+' : ''}${coin.price_change_percentage_24h.toFixed(2)}%` : '0.00%'}
                 </td>
-                <td>${coin.market_cap?.toLocaleString() ?? 'N/A'}</td>
+                <td className="col-mcap-desk">${coin.market_cap?.toLocaleString() ?? 'N/A'}</td>
               </tr>
             ))}
           </tbody>

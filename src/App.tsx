@@ -74,6 +74,42 @@ const App: React.FC = () => {
     </main>
   );
 
+  const renderAIAnalysis = () => (
+    <main className="app-container">
+      <div className="main-content">
+        <div className="markets-header">
+          <div className="markets-title-wrap">
+            <div className="markets-icon portfolio-icon">
+              <Sparkles size={28} />
+            </div>
+            <div>
+              <h2>AI Trading Analysis</h2>
+              <p>Select a coin and generate insights</p>
+            </div>
+          </div>
+        </div>
+        <AIAssistant selectedCoin={selectedCoinData} />
+        <div ref={chartRef}>
+          <PriceChart coinId={selectedCoin} />
+        </div>
+        <CoinTable
+          coins={coins}
+          onSelectCoin={handleSelectCoin}
+          watchlist={watchlist}
+          onToggleWatchlist={toggleWatchlist}
+        />
+      </div>
+      <aside className="sidebar">
+        <Watchlist
+          coins={coins}
+          watchlist={watchlist}
+          onToggleWatchlist={toggleWatchlist}
+          onSelectCoin={handleSelectCoin}
+        />
+      </aside>
+    </main>
+  );
+
   const renderMarkets = () => (
     <main className="app-container app-container--wide">
       <div className="markets-header">
@@ -179,6 +215,7 @@ const App: React.FC = () => {
     <div className="dashboard-root">
       <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
       {activeTab === 'dashboard' && renderDashboard()}
+      {activeTab === 'ai' && renderAIAnalysis()}
       {activeTab === 'markets' && renderMarkets()}
       {activeTab === 'portfolio' && renderPortfolio()}
     </div>
