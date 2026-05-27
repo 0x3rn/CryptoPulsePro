@@ -74,5 +74,5 @@ export const generateAIAnalysis = async (coinName: string, price: number, change
       ];
   const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
 
-  return `${coinName} is exhibiting a ${strength} ${trend} bias with a 24h change of ${change.toFixed(2)}%. Current price: $${price.toLocaleString()}.\n\n**Analysis:** ${randomSuggestion}\n\n**Risk Level:** ${Math.abs(change) > 5 ? 'High' : Math.abs(change) > 2 ? 'Medium' : 'Low'} — always size positions accordingly.`;
+  return `${coinName} is exhibiting a ${strength} ${trend} bias with a 24h change of ${change.toFixed(2)}%. Current price: $${price.toLocaleString()}.\n\nAnalysis: ${randomSuggestion}\n\nRisk Level: ${Math.abs(change) > 5 ? 'High' : Math.abs(change) > 2 ? 'Medium' : 'Low'} — always size positions accordingly.`;
 };

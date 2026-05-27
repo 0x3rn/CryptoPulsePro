@@ -59,6 +59,16 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .app-container {
+    padding-bottom: 90px;
+  }
+
+  .dashboard-root {
+    padding-bottom: 0;
+  }
+}
+
 .main-content {
   display: flex;
   flex-direction: column;
