@@ -218,6 +218,9 @@ const App: React.FC = () => {
       {activeTab === 'ai' && renderAIAnalysis()}
       {activeTab === 'markets' && renderMarkets()}
       {activeTab === 'portfolio' && renderPortfolio()}
+      <footer className="site-footer">
+        <p>Made with ❤️ by Somto Ike</p>
+      </footer>
     </div>
   );
 };
