@@ -5,7 +5,7 @@ import { Bot, AlertTriangle } from 'lucide-react';
 import '../styles/AIAssistant.css';
 
 interface AIAssistantProps {
-  selectedCoin: Coin | null;
+  selectedCoin?: Coin | null;
 }
 
 const AIAssistant: React.FC<AIAssistantProps> = ({ selectedCoin }) => {
@@ -20,7 +20,10 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ selectedCoin }) => {
       const result = await generateAIAnalysis(
         selectedCoin.name,
         selectedCoin.current_price,
-        selectedCoin.price_change_percentage_24h
+        selectedCoin.price_change_percentage_24h,
+        [],
+        [],
+        []
       );
       setAnalysis(result);
     } catch (err) {

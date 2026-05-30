@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Coin } from '../types/crypto';
 import { Trash2 } from 'lucide-react';
 import '../styles/Watchlist.css';
@@ -7,11 +8,20 @@ interface Props {
   coins: Coin[];
   watchlist: string[];
   onToggleWatchlist: (id: string) => void;
-  onSelectCoin: (id: string) => void;
+  onSelectCoin?: (id: string) => void;
 }
 
 const Watchlist: React.FC<Props> = ({ coins, watchlist, onToggleWatchlist, onSelectCoin }) => {
+  const navigate = useNavigate();
   const watchlistCoins = (coins ?? []).filter(coin => watchlist.includes(coin.id));
+
+  const handleItemClick = (coinId: string) => {
+    if (onSelectCoin) {
+      onSelectCoin(coinId);
+    } else {
+      navigate(`/coin/${coinId}`);
+    }
+  };
 
   return (
     <div className="watchlist-container">
@@ -23,7 +33,7 @@ const Watchlist: React.FC<Props> = ({ coins, watchlist, onToggleWatchlist, onSel
       ) : (
         <div className="watchlist-items">
           {watchlistCoins.map(coin => (
-            <div key={coin.id} className="watchlist-item" onClick={() => onSelectCoin(coin.id)}>
+            <div key={coin.id} className="watchlist-item" onClick={() => handleItemClick(coin.id)}>
               <img src={coin.image} alt={coin.name} className="coin-icon-small" />
               <div className="coin-info">
                 <span className="coin-name">{coin.name}</span>

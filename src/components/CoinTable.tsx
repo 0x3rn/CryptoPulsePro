@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Coin } from '../types/crypto';
 import { Star } from 'lucide-react';
 import '../styles/Table.css';
 
 interface Props {
   coins: Coin[];
-  onSelectCoin: (id: string) => void;
+  onSelectCoin?: (id: string) => void;
   watchlist: string[];
   onToggleWatchlist: (id: string) => void;
 }
@@ -18,7 +19,16 @@ const formatMarketCap = (mc: number): string => {
 };
 
 const CoinTable: React.FC<Props> = ({ coins, onSelectCoin, watchlist, onToggleWatchlist }) => {
+  const navigate = useNavigate();
   const [sortConfig, setSortConfig] = useState<{ key: keyof Coin; direction: 'asc' | 'desc' } | null>(null);
+
+  const handleRowClick = (coinId: string) => {
+    if (onSelectCoin) {
+      onSelectCoin(coinId);
+    } else {
+      navigate(`/coin/${coinId}`);
+    }
+  };
 
   const sortedCoins = [...(coins ?? [])].sort((a, b) => {
     if (!sortConfig) return 0;
@@ -49,7 +59,7 @@ const CoinTable: React.FC<Props> = ({ coins, onSelectCoin, watchlist, onToggleWa
           </thead>
           <tbody>
             {sortedCoins.map(coin => (
-              <tr key={coin.id} onClick={() => onSelectCoin(coin.id)}>
+              <tr key={coin.id} onClick={() => handleRowClick(coin.id)}>
                 <td className="col-watch" onClick={(e) => { e.stopPropagation(); onToggleWatchlist(coin.id); }}>
                   <Star className={watchlist.includes(coin.id) ? 'star-active' : 'star-inactive'} size={16} />
                 </td>

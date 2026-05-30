@@ -1,74 +1,46 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import CoinTable from './components/CoinTable';
-import PriceChart from './components/PriceChart';
 import Watchlist from './components/Watchlist';
 import MarketData from './components/MarketData';
 import AIAssistant from './components/AIAssistant';
+import CoinDetailPage from './components/CoinDetail';
 import { fetchMarketData } from './services/api';
 import { useWatchlist } from './hooks/useWatchlist';
 import { Coin } from './types/crypto';
 import { BarChart3, Briefcase, Sparkles } from 'lucide-react';
 import './styles/App.css';
 
-const App: React.FC = () => {
-  const [coins, setCoins] = useState<Coin[]>([]);
-  const [selectedCoin, setSelectedCoin] = useState<string>('bitcoin');
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<string>('dashboard');
-  const { watchlist, toggleWatchlist } = useWatchlist();
+const HomePage: React.FC<{
+  coins: Coin[];
+  watchlist: string[];
+  toggleWatchlist: (id: string) => void;
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}> = ({ coins, watchlist, toggleWatchlist, activeTab, setActiveTab }) => {
+  const navigate = useNavigate();
 
-  const chartRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await fetchMarketData();
-        setCoins(data);
-      } catch (err) {
-        console.error("Failed to fetch coins", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getData();
-    const interval = setInterval(getData, 60000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleSelectCoin = useCallback((id: string) => {
-    setSelectedCoin(id);
-    requestAnimationFrame(() => {
-      chartRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }, []);
-
-  if (loading) return <div className="loading">Loading Dashboard...</div>;
-
-  const selectedCoinData = coins.find(c => c.id === selectedCoin) || null;
+  const handleNavigateToCoin = useCallback((coinId: string) => {
+    navigate(`/coin/${coinId}`);
+  }, [navigate]);
 
   const renderDashboard = () => (
     <main className="app-container">
       <div className="main-content">
         <MarketData />
-        <div ref={chartRef}>
-          <PriceChart coinId={selectedCoin} />
-        </div>
         <CoinTable
           coins={coins}
-          onSelectCoin={handleSelectCoin}
           watchlist={watchlist}
           onToggleWatchlist={toggleWatchlist}
         />
       </div>
       <aside className="sidebar">
-        <AIAssistant selectedCoin={selectedCoinData} />
+        <AIAssistant />
         <Watchlist
           coins={coins}
           watchlist={watchlist}
           onToggleWatchlist={toggleWatchlist}
-          onSelectCoin={handleSelectCoin}
         />
       </aside>
     </main>
@@ -88,13 +60,9 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-        <AIAssistant selectedCoin={selectedCoinData} />
-        <div ref={chartRef}>
-          <PriceChart coinId={selectedCoin} />
-        </div>
+        <AIAssistant />
         <CoinTable
           coins={coins}
-          onSelectCoin={handleSelectCoin}
           watchlist={watchlist}
           onToggleWatchlist={toggleWatchlist}
         />
@@ -104,7 +72,6 @@ const App: React.FC = () => {
           coins={coins}
           watchlist={watchlist}
           onToggleWatchlist={toggleWatchlist}
-          onSelectCoin={handleSelectCoin}
         />
       </aside>
     </main>
@@ -134,7 +101,6 @@ const App: React.FC = () => {
       <div className="full-width-table">
         <CoinTable
           coins={coins}
-          onSelectCoin={handleSelectCoin}
           watchlist={watchlist}
           onToggleWatchlist={toggleWatchlist}
         />
@@ -184,7 +150,7 @@ const App: React.FC = () => {
         ) : (
           <div className="portfolio-grid">
             {watchlistCoins.map(coin => (
-              <div key={coin.id} className="portfolio-card" onClick={() => handleSelectCoin(coin.id)}>
+              <div key={coin.id} className="portfolio-card" onClick={() => handleNavigateToCoin(coin.id)}>
                 <div className="portfolio-card-top">
                   <img src={coin.image} alt={coin.name} className="portfolio-coin-img" />
                   <div className="portfolio-coin-info">
@@ -222,6 +188,47 @@ const App: React.FC = () => {
         <p>Made with ❤️ by Somto Ike</p>
       </footer>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  const [coins, setCoins] = useState<Coin[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const { watchlist, toggleWatchlist } = useWatchlist();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await fetchMarketData();
+        setCoins(data);
+      } catch (err) {
+        console.error("Failed to fetch coins", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getData();
+    const interval = setInterval(getData, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (loading) return <div className="loading">Loading Dashboard...</div>;
+
+  return (
+    <Routes>
+      <Route path="/" element={
+        <HomePage
+          coins={coins}
+          watchlist={watchlist}
+          toggleWatchlist={toggleWatchlist}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+      } />
+      <Route path="/coin/:coinId" element={<CoinDetailPage />} />
+    </Routes>
   );
 };
 
