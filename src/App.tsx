@@ -2,14 +2,12 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import CoinTable from './components/CoinTable';
-import Watchlist from './components/Watchlist';
 import MarketData from './components/MarketData';
-import AIAssistant from './components/AIAssistant';
 import CoinDetailPage from './components/CoinDetail';
 import { fetchMarketData } from './services/api';
 import { useWatchlist } from './hooks/useWatchlist';
 import { Coin } from './types/crypto';
-import { BarChart3, Briefcase, Sparkles } from 'lucide-react';
+import { BarChart3, Briefcase, Sparkles, Info } from 'lucide-react';
 import './styles/App.css';
 
 const HomePage: React.FC<{
@@ -26,54 +24,50 @@ const HomePage: React.FC<{
   }, [navigate]);
 
   const renderDashboard = () => (
-    <main className="app-container">
-      <div className="main-content">
-        <MarketData />
+    <main className="app-container app-container--wide">
+      <MarketData />
+      <div className="coin-table-prompt">
+        <div className="prompt-icon-wrap">
+          <Info size={20} className="prompt-icon" />
+        </div>
+        <span>Select a coin to see more details and get AI trading analysis</span>
+      </div>
+      <div className="full-width-table">
         <CoinTable
           coins={coins}
           watchlist={watchlist}
           onToggleWatchlist={toggleWatchlist}
         />
       </div>
-      <aside className="sidebar">
-        <AIAssistant />
-        <Watchlist
-          coins={coins}
-          watchlist={watchlist}
-          onToggleWatchlist={toggleWatchlist}
-        />
-      </aside>
     </main>
   );
 
   const renderAIAnalysis = () => (
-    <main className="app-container">
-      <div className="main-content">
-        <div className="markets-header">
-          <div className="markets-title-wrap">
-            <div className="markets-icon portfolio-icon">
-              <Sparkles size={28} />
-            </div>
-            <div>
-              <h2>AI Trading Analysis</h2>
-              <p>Select a coin and generate insights</p>
-            </div>
+    <main className="app-container app-container--wide">
+      <div className="markets-header">
+        <div className="markets-title-wrap">
+          <div className="markets-icon portfolio-icon">
+            <Sparkles size={28} />
+          </div>
+          <div>
+            <h2>AI Trading Analysis</h2>
+            <p>Select a coin below to view detailed AI-powered futures trading insights</p>
           </div>
         </div>
-        <AIAssistant />
+      </div>
+      <div className="coin-table-prompt">
+        <div className="prompt-icon-wrap">
+          <Info size={20} className="prompt-icon" />
+        </div>
+        <span>Select a coin to see more details and get AI trading analysis</span>
+      </div>
+      <div className="full-width-table">
         <CoinTable
           coins={coins}
           watchlist={watchlist}
           onToggleWatchlist={toggleWatchlist}
         />
       </div>
-      <aside className="sidebar">
-        <Watchlist
-          coins={coins}
-          watchlist={watchlist}
-          onToggleWatchlist={toggleWatchlist}
-        />
-      </aside>
     </main>
   );
 
@@ -98,6 +92,12 @@ const HomePage: React.FC<{
           </div>
         </div>
       </div>
+      <div className="coin-table-prompt">
+        <div className="prompt-icon-wrap">
+          <Info size={20} className="prompt-icon" />
+        </div>
+        <span>Select a coin to see more details and get AI trading analysis</span>
+      </div>
       <div className="full-width-table">
         <CoinTable
           coins={coins}
@@ -108,7 +108,7 @@ const HomePage: React.FC<{
     </main>
   );
 
-  const renderPortfolio = () => {
+  const renderWatchlist = () => {
     const watchlistCoins = coins.filter(c => watchlist.includes(c.id));
     const totalValue = watchlistCoins.reduce((sum, c) => sum + (c.current_price || 0), 0);
 
@@ -118,7 +118,7 @@ const HomePage: React.FC<{
           <div className="markets-title-wrap">
             <Briefcase size={28} className="markets-icon portfolio-icon" />
             <div>
-              <h2>Portfolio</h2>
+              <h2>Watchlist</h2>
               <p>Track your watchlisted assets</p>
             </div>
           </div>
@@ -141,7 +141,7 @@ const HomePage: React.FC<{
             <div className="empty-icon-wrap">
               <Sparkles size={48} className="empty-icon" />
             </div>
-            <h3>Your portfolio is empty</h3>
+            <h3>Your watchlist is empty</h3>
             <p>Add coins to your watchlist by clicking the star icon on any coin in the Dashboard or Markets tab. Your selected assets and their total value will appear here.</p>
             <button className="portfolio-cta" onClick={() => setActiveTab('markets')}>
               Browse Markets
@@ -183,7 +183,7 @@ const HomePage: React.FC<{
       {activeTab === 'dashboard' && renderDashboard()}
       {activeTab === 'ai' && renderAIAnalysis()}
       {activeTab === 'markets' && renderMarkets()}
-      {activeTab === 'portfolio' && renderPortfolio()}
+      {activeTab === 'watchlist' && renderWatchlist()}
       <footer className="site-footer">
         <p>Made with ❤️ by <a href="https://somto.xyz" target="_blank" rel="noopener noreferrer">Somto Ike</a></p>
       </footer>

@@ -11,14 +11,14 @@ const tabs = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'markets', label: 'Markets', icon: BarChart3 },
   { id: 'ai', label: 'AI Analysis', icon: Bot },
-  { id: 'portfolio', label: 'Portfolio', icon: Briefcase },
+  { id: 'watchlist', label: 'Watchlist', icon: Briefcase },
 ];
 
 const mobileTabs = [
   { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
   { id: 'markets', label: 'Markets', icon: BarChart3 },
   { id: 'ai', label: 'AI', icon: Bot },
-  { id: 'portfolio', label: 'Portfolio', icon: Briefcase },
+  { id: 'watchlist', label: 'Watchlist', icon: Briefcase },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {

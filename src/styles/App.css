@@ -399,6 +399,40 @@ body {
   font-weight: 600;
 }
 
+/* ── Coin Table Prompt ── */
+.coin-table-prompt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 14px 20px;
+}
+
+.prompt-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(0, 255, 136, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.prompt-icon {
+  color: var(--accent);
+}
+
+.coin-table-prompt span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
 /* ── Footer ── */
 .site-footer {
   text-align: center;
@@ -413,6 +447,17 @@ body {
   font-size: 0.82rem;
   color: var(--text-muted);
   letter-spacing: 0.3px;
+}
+
+.site-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.site-footer a:hover {
+  color: var(--text-primary);
 }
 
 @media (max-width: 768px) {
