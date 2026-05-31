@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import CoinTable from './components/CoinTable';
 import MarketData from './components/MarketData';
@@ -217,18 +218,21 @@ const App: React.FC = () => {
   if (loading) return <div className="loading">Loading Dashboard...</div>;
 
   return (
-    <Routes>
-      <Route path="/" element={
-        <HomePage
-          coins={coins}
-          watchlist={watchlist}
-          toggleWatchlist={toggleWatchlist}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      } />
-      <Route path="/coin/:coinId" element={<CoinDetailPage />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={
+          <HomePage
+            coins={coins}
+            watchlist={watchlist}
+            toggleWatchlist={toggleWatchlist}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+        } />
+        <Route path="/coin/:coinId" element={<CoinDetailPage />} />
+      </Routes>
+      <Analytics />
+    </>
   );
 };
 
