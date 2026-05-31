@@ -185,7 +185,7 @@ const HomePage: React.FC<{
       {activeTab === 'markets' && renderMarkets()}
       {activeTab === 'portfolio' && renderPortfolio()}
       <footer className="site-footer">
-        <p>Made with ❤️ by Somto Ike</p>
+        <p>Made with ❤️ by <a href="https://somto.xyz" target="_blank" rel="noopener noreferrer">Somto Ike</a></p>
       </footer>
     </div>
   );
