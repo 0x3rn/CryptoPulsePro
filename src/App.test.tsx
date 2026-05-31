@@ -15,6 +15,6 @@ test('renders crypto dashboard without crashing', async () => {
     // Wait for async state updates to settle
     await new Promise(resolve => setTimeout(resolve, 100));
   });
-  const headingElement = screen.getByText(/CryptoPulse/i);
+  const headingElement = screen.getByText(/BlockLens/i);
   expect(headingElement).toBeInTheDocument();
 });

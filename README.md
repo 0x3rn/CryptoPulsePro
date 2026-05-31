@@ -1,4 +1,4 @@
-# CryptoPulse Pro
+# BlockLens
 
 A real-time cryptocurrency dashboard built with React and TypeScript. Track live prices, analyze market trends, manage a watchlist, and get AI-powered trading insights — all in a dark, professional interface.
 
@@ -44,7 +44,7 @@ A real-time cryptocurrency dashboard built with React and TypeScript. Track live
 ## Project Structure
 
 ```
-crypto-dashboard/
+  blocklens/
 ├── public/
 │   ├── index.html
 │   ├── favicon.ico
@@ -93,7 +93,7 @@ crypto-dashboard/
 ```bash
 # Clone the repository
 git clone <repo-url>
-cd crypto-dashboard
+cd blocklens
 
 # Install dependencies
 npm install
