@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import { ArrowLeft, Bot, AlertTriangle, TrendingUp, Activity, Layers } from 'lucide-react';
 import { fetchCoinDetail, fetchCoinHistory, generateAIAnalysis } from '../services/api';
 import { CoinDetail as CoinDetailType } from '../types/crypto';
@@ -259,7 +260,7 @@ const CoinDetailPage: React.FC = () => {
             {analysis && (
               <div className="ai-result">
                 <h4>Analysis Result:</h4>
-                <p>{analysis}</p>
+                <ReactMarkdown>{analysis}</ReactMarkdown>
               </div>
             )}
           </div>

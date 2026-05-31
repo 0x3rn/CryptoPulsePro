@@ -30,8 +30,8 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
             <div className="logo-icon-wrap">
               <TrendingUp className="logo-icon" size={22} />
             </div>
-            <span>CryptoPulse</span>
-            <span className="nav-badge">Pro</span>
+            <span>Block</span>
+            <span className="nav-badge">Lens</span>
           </div>
           <div className="nav-links">
             {tabs.map(tab => {

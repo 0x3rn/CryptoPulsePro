@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { generateAIAnalysis } from '../services/api';
 import { Coin } from '../types/crypto';
 import { Bot, AlertTriangle } from 'lucide-react';
@@ -42,7 +43,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ selectedCoin }) => {
           </div>
           <div>
             <h3>AI Assistant</h3>
-            <span className="ai-subtitle">Powered by GPT</span>
+            <span className="ai-subtitle">Powered by DeepSeek</span>
           </div>
         </div>
       </div>
@@ -67,7 +68,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ selectedCoin }) => {
         {analysis && (
           <div className="ai-result">
             <h4>Analysis Result:</h4>
-            <p>{analysis}</p>
+            <ReactMarkdown>{analysis}</ReactMarkdown>
           </div>
         )}
       </div>

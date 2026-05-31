@@ -84,7 +84,7 @@ const HomePage: React.FC<{
           <BarChart3 size={28} className="markets-icon" />
           <div>
             <h2>Markets</h2>
-            <p>Top 50 cryptocurrencies by market cap</p>
+            <p>Top 100 cryptocurrencies by market cap</p>
           </div>
         </div>
         <div className="markets-stats">
